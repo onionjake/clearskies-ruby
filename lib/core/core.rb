@@ -1,5 +1,6 @@
 require_relative 'access_code'
 require_relative 'club'
+require_relative 'key'
 
 module Core
   def self.init(errors_callback)
