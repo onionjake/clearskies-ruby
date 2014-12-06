@@ -4,8 +4,8 @@
 
 module ConnectionManager
   # Check if we're currently connected to a peer
-  def self.have_connection? share_id, peer_id
-    connections = get_connections key(share_id, peer_id)
+  def self.have_connection? club_id, peer_id
+    connections = get_connections key(club_id, peer_id)
     connections.each do |connection|
       return true if connection.authenticated?
     end
@@ -39,7 +39,7 @@ module ConnectionManager
     @connections[key] ||= []
   end
 
-  # Given a share_id and peer_id (or a connection object), get a unique key
+  # Given a club_id and peer_id (or a connection object), get a unique key
   # that uniquely represents this peer
   def self.key *args
     if args[0].is_a? Connection

@@ -47,19 +47,19 @@ module TrackerClient
     end
   end
 
-  # Ask all trackers for information about all of our shares.
+  # Ask all trackers for information about all of our club.
   def self.poll_all_trackers
     Conf.trackers.each do |url|
       ids = []
-      IDMapper.each do |share_id,peer_id|
-        ids << "#{share_id}@#{peer_id}"
+      IDMapper.each do |club_id,peer_id|
+        ids << "#{club_id}@#{peer_id}"
       end
       next if ids.empty?
       poll_tracker ids, url
     end
   end
 
-  # Ask tracker for a list of peers interested in a share.
+  # Ask tracker for a list of peers interested in a club.
   def self.poll_tracker ids, url
     uri = URI(url)
     query = {
@@ -75,13 +75,13 @@ module TrackerClient
     return unless res.is_a? Net::HTTPSuccess
     info = JSON.parse res.body, symbolize_names: true
 
-    info[:others].each do |share_id,peers|
-      share_id = share_id.to_s
+    info[:others].each do |club_id,peers|
+      club_id = club_id.to_s
       peers.each do |peerspec|
         id, addr = peerspec.split "@"
         addr =~ /\A(\w+):(\[(.*?)\]|(.*?)):(\d+)\Z/ or raise "Invalid addr #{addr.inspect}"
         proto, ip, port = $1, $3 || $4, $5
-        @peer_discovered.call share_id, id, proto, ip, port.to_i
+        @peer_discovered.call club_id, id, proto, ip, port.to_i
       end
     end
   end
