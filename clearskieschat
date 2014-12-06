@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# This is a contrived chat application that has no other purpose than to
+# test the core parts of clearskies.  It would make a really lame instant
+# messaging program as is.
 
 ### Start the first without any arguments.  Start the second with the accesscode as an argument.
 
